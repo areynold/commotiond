@@ -178,6 +178,11 @@ error:
   return 0;
 }
 
+/**
+ * @brief Convert command line arguments to string
+ * @param argv
+ * @return 0: failure, 1: success
+ */
 int argv_to_string(char **argv, const int argc, char *output, const size_t max) {
   int i;
   for(i = 0; i < argc; i++) {
@@ -191,17 +196,31 @@ int argv_to_string(char **argv, const int argc, char *output, const size_t max) 
   return 1; 
 }
 
+/**
+ * @brief Split MAC address into 6 array elements
+ * @param macstr
+ * @param mac[6]
+ */
 void mac_string_to_bytes(char *macstr, unsigned char mac[6]) {
   memset(mac, '\0', 6);
   sscanf(macstr, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5]);
   return;
 }
 
+/**
+ * @brief Print formatted MAC address from 6 element array
+ * @param mac as 6 element array
+ */
 void print_mac(unsigned char mac[6]) {
   printf("%02x:%02x:%02x:%02x:%02x:%02x", mac[0] & 0xff, mac[1] & 0xff, mac[2] & 0xff, mac[3] & 0xff, mac[4] & 0xff, mac[5] & 0xff);
   return;
 }
 
+/**
+ * @brief Convert wifi channel to frequency
+ * @param channel The human readable wifi channel selection
+ * @return Wifi frequency in MHz or 0 if param channel is not valid
+ */
 int wifi_freq(const int channel) {
   if(channel > 14) {
     return 5000 + 5*channel;
@@ -255,6 +274,12 @@ int wifi_freq(const int channel) {
   }
 }
 
+/**
+ * @brief Convert wifi frequency to channel
+ * @param frequency The wifi frequency in MHz
+ * @return Human readable wifi channel or 0 if param frequency
+ * is not a valid wifi frequency.
+ */
 int wifi_chan(const int frequency) {
   if(frequency < 5080) {
     return (frequency - 5000)/5;
